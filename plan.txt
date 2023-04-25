@@ -1,0 +1,62 @@
+fn main() {
+    // entry point
+}
+
+fn fn_name (<b/w/h> p1, <b/w/h> p2, ...) -> [b/w/h], [b/w/h], ... {
+    [return [...];]
+}
+
+fn_name(...);
+
+syscall(<id>, [p1], ...);
+
+read_keyboard() -> w; // -1 if not pressed, -2 if addr not set, otherwise ascii key id
+
+set_screen_dims(w width, w height); // Set 2D pixel dimensions of screen
+
+set_keyboard_addr(w addr); // Set address of where to read keyboard from
+
+set_screen_addr(w addr); // Set address of first screen pixel (topleft)
+
+write_pixel(b red, b green, b blue, w x, w y) -> w; // -1 if addr not set, -2 if dims not set, 0 if success
+
+// Operators
+>
+>=
+<=
+<
+==
+!=
++
+-
+/
+*
+<<  // sll 
+>>  // srl
+>>> // sra
+=
++=
+-=
+*=
+/=
+++
+--
+&
+|
+!
+
+<b/w/h> var_name = <0x.../0b.../...>;
+<b/w/h>[<length>] arr_name = <0x.../0b.../...>; // One value means array will be populated with length repeats of that item
+<b/w/h>[<length>] arr_name = <0x.../0b.../...>, ...; // Otherwise must list all items in array explicitly
+
+if ( <expression> ) {
+
+} elif ( <expression> ) {
+
+} else {
+
+}
+
+while ( <expression> ) {
+
+}
