@@ -1,0 +1,10 @@
+# This is a comment
+# State transitions for unmentioned characters go to garbage state with id -1
+# State names may have spaces in them and any other symbols, however, they MAY NOT start with a number
+# State transition lines MUST start with a tab, or else they will be ignored
+
+<int state id> <state name>:
+    <char>: <next state id | next state name>
+    ...
+
+

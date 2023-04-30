@@ -1,3 +1,5 @@
+#define MAX_LINE_SIZE 100   // Max number of characters in a line of final MIPs code
+
 /*
 0 = STMTS, value = NULL
 1 = ASSIGN, value = NULL
@@ -32,19 +34,20 @@ typedef struct syntax_tree_node {
 Stores lines of compiled MIPs code in memory. Loop and write them to a file one-by-one
 */
 typedef struct string_linked_list {
-    char line[100];
+    char line[MAX_LINE_SIZE];
     struct string_linked_list *next;
 } LinkedList;
 
 /*
 Given an open file stream in read binary mode, parse the file into an abstract syntax tree and return a 
-pointer to the root node. Return NULL if a syntax error occurred and print user friendly error information
-to stderr
+pointer to the root node. Exit with error code 1 if a syntax error occurred and print user friendly error 
+information to stderr
 */
 ASTnode *parse(FILE* file);
 
 /*
 Given a pointer to the root of an abstract syntax tree, write the final compiled MIPs assembly code to a LinkedList.
-Return a pointer to thgis linked list. If an error was caught, print a friendly error message to stderr and return NULL
+Return a pointer to thgis linked list. If an error was caught, print a friendly error message to stderr and exit
+with error code 1
 */
 LinkedList* compile(ASTnode *root);

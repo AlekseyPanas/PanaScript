@@ -1,0 +1,17 @@
+# This is a sample DFSM to be tested on
+#This comment uses no space after the # symbol
+
+0 state 0:
+	a: state 1
+	b: state 2
+
+1 state 1:
+	a: state 0
+	b: 2
+
+2 state 2:
+	a: 1
+	b: state 0
+	c: 4
+
+4 garbage state:

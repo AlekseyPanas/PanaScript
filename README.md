@@ -85,7 +85,9 @@ All the following shorthand assignments exist:
 `|` bitwise or  
 `!` bitwise not  
 
-
+Note that order of operations does not exist in this early version. Parenthesis in the
+expression will generate an error. Expressions are evaluated left to right always. Order
+of operations will be added later
 
 Literals like `0`, `0x44`, `0b101`, are typed based on context:
 - If passed as a parameter, they are typed to the parameter. 
