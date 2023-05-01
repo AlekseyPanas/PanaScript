@@ -13,11 +13,12 @@
 	a: 1
 	b: state 0
 	c: 4
+#	d: nonexistent
 
 4 garbage state:
 
 5 cool state:
 	x: 2
-	[A-Z0-9]: 0
+	[A-D0-4]: 0
 	(32, 10): 1
 	{y, w, a, b}: 4

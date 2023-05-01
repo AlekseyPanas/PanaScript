@@ -10,3 +10,4 @@
 
 # Trigger can be a single character, a range in the form [A-Za-z0-9], a list in the form {a, b, x, 1}, or a list of ascii numeric values in the form (32, 11, 12)
 
+# Using non-unique state IDs won't throw an error but will likely result in unpredictable behavior

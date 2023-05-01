@@ -13,10 +13,11 @@ typedef struct transition {
 
 /*
 id is an int id for the state, name is a string name for the state, and
-transitions is a list of transitions from this state
+transitions is a list of transitions from this state. Next points to the next state in the list
 */
 typedef struct dfsa {
     int id;
     char *name;
     struct transition *transitions;
+    struct dfsa *next;
 } DFSA;

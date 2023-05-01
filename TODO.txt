@@ -1,0 +1,2 @@
+Convert DFSA parser to use a method
+main -> parse DFSA for language -> parse script using DFSA into AST -> compile using AST 
