@@ -1,2 +1,4 @@
-Convert DFSA parser to use a method
+Add numeric range support to DFSA
+Add special syntax for specifying ALL ASCII characters
+
 main -> parse DFSA for language -> parse script using DFSA into AST -> compile using AST 

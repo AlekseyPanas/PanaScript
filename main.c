@@ -4,7 +4,7 @@
 int main(int argc, char**argv) {
 
     if (argc == 2 || argc == 3) {
-    
+        // Sets specified output filename or default
         char *out_filename;
         if (argc == 3) {
             out_filename = argv[2];

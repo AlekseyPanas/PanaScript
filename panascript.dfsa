@@ -1,2 +1,19 @@
-# 
+0 start:
+	h: h
+	b: b
+	w: w
 
+1 b:
+	(32, 10): 4
+
+2 h:
+	(32, 10): 5
+
+3 w:
+	(32, 10): 6
+
+4 Declaring Byte:
+
+5 Declaring Half Word:
+
+6 Declaring Word:

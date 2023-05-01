@@ -1,5 +1,6 @@
 *.o
 panascript
 dfsa_parser
+test_dfsa_parser
 *.asm
 .vscode/

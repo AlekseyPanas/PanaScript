@@ -21,3 +21,26 @@ typedef struct dfsa {
     struct transition *transitions;
     struct dfsa *next;
 } DFSA;
+
+
+/*
+Given an 'r' mode file stream for a file in the .dfsa format, return a pointer to the processed
+DFSA struct of that file
+*/
+DFSA *parse_dfsa(FILE* file);
+
+/*
+Return a pointer to the DFSA state identified by id. Return NULL if state doesn't exist
+*/
+DFSA *ptr_from_id(DFSA *head, int id);
+
+/*
+Return a pointer to the DFSA state the requested name. Return NULL if state doesn't exist
+*/
+DFSA *ptr_from_name(DFSA *head, char *name);
+
+/*
+From current state cur, return pointer to new state resulting from transition with character c. Return
+NULL if c has no transition (implies garbage state)
+*/
+DFSA *eval_trans(DFSA *cur, char c);
