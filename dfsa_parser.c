@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
             // print_bin(buf);
 
-            char whitespace[]= " \t\r\n\v\f";  // Define whitespace for strtok delimiter
+            char whitespace[] = " \t\r\n\v\f";  // Define whitespace for strtok delimiter
 
             // Digit ascii range
             if (buf[0] >= '0' && buf[0] <= '9') {
@@ -40,10 +40,12 @@ int main(int argc, char **argv) {
 
             // Tab for state transitions
             else if (buf[0] == '\t') {
+                char print_str[500]; // REMOVE DEBUG
 
                 char *str = &buf[1]; // Skips tab
-                char *token = strtok(str, ":"); // Gets transition character
-                char trans_chr = *token; 
+                char *token = strtok(str, ":"); // Gets stripped transition token
+                char *stripped = strip(token);
+                
                 token = strtok(NULL, "\r\n"); // Gets state name of transition
                 while (*token == ' ') {token++;} // Skips leading spaces
 
@@ -51,11 +53,121 @@ int main(int argc, char **argv) {
                 if (*token >= '0' && *token <= '9') {
                     int target_state_id = strtol(token, NULL, 10);
 
-                    printf("Parsed state transition %c -> ID %d\n", trans_chr, target_state_id);
+                    sprintf(print_str, "-> ID %d\n", target_state_id);
                 } 
                 // Transition target state specified by its name
                 else {
-                    printf("Parsed state transition %c -> '%s'\n", trans_chr, token);
+                    sprintf(print_str, "-> '%s'\n", token);
+                }
+
+                // ASCII Character ranges
+                if (stripped[0] == '[') {
+                    char c1;
+                    char c2;
+                    int state = 0;  // 0 not started, 1 read first char, 2 read dash
+                    stripped++;
+                    while (*stripped != '\0' && *stripped != ']') {
+                        
+                        // Ignore whitespace
+                        if (!(char_in(*stripped, whitespace))) {
+                            
+                            // Records first character
+                            if (state == 0) {
+                                c1 = *stripped; 
+                                state = 1;
+                            } else if (state == 1) {
+                                if (*stripped == '-') {
+                                    // Skip dash, record state
+                                    state = 2;
+                                } else {
+                                    // Dash expected but not found, error
+                                    fprintf(stderr, "Incorrect range syntax, dash expected but not found. Line: %d\n", line_count);
+                                    exit(1);
+                                }
+                            } 
+                            // Record 2nd char
+                            else if (state == 2) {
+                                c2 = *stripped;
+                                state = 0;
+
+                                // Add transitions within range (TODO)
+                                for (char c = c1; c <= c2; c++) {
+                                    // DEBUG: Print state transitions
+                                    char temp[500];
+                                    sprintf(temp, "Parsed state transition %c ", c);
+                                    strcat(temp, print_str);
+                                    printf("%s", temp);
+                                }
+                            }
+                        }
+
+                        stripped++;
+                    }
+                } 
+                
+                // ASCII Character list
+                else if (stripped[0] == '{') {
+                    // Removes curly braces
+                    stripped++;
+                    if (stripped[strlen(stripped) - 1] != '}') {
+                        fprintf(stderr, "Closing curly bracket missing on line %d!\n", line_count);
+                        exit(1);
+                    }
+                    stripped[strlen(stripped) - 1] = '\0';
+
+                    // Get next character in list
+                    char *list_item = strtok(stripped, ",");
+                    
+                    while (list_item != NULL) {
+                        list_item = strip(list_item);  // Strip spaces
+
+                        // TODO: Add transition
+                        char temp[500];
+                        sprintf(temp, "Parsed state transition %c ", *list_item);
+                        strcat(temp, print_str);
+                        printf("%s", temp);
+
+                        list_item = strtok(NULL, ","); // Next char
+                    }
+                } 
+                
+                // ASCII Numeric list
+                else if (stripped[0] == '(') {
+                    // Removes parenthesis
+                    stripped++;
+                    if (stripped[strlen(stripped) - 1] != ')') {
+                        fprintf(stderr, "Closing parenthesis missing on line %d!\n", line_count);
+                        exit(1);
+                    }
+                    stripped[strlen(stripped) - 1] = '\0';
+
+                    // Get next number in list
+                    char *list_item = strtok(stripped, ",");
+
+                    while (list_item != NULL) {
+                        list_item = strip(list_item);  // Strip spaces
+
+                        int ascii_code = strtol(list_item, NULL, 10);
+
+                        // TODO: Add transition
+                        char temp[500];
+                        sprintf(temp, "Parsed state transition %d ", ascii_code);
+                        strcat(temp, print_str);
+                        printf("%s", temp);
+
+                        list_item = strtok(NULL, ","); // Next number
+                    }
+                } 
+                
+                // Single character
+                else {
+                    char trans_chr = *stripped; 
+
+                    // DEBUG: Print state transition
+                    char temp[500];
+                    sprintf(temp, "Parsed state transition %c ", trans_chr);
+                    strcat(temp, print_str);
+                    printf("%s", temp);
                 }
                 
             }

@@ -8,3 +8,18 @@ void print_bin(char *str) {
     }
     printf("\n");
 }
+
+char *strip(char *s) {
+    while (*s == ' ') {s++;}
+    while (s[strlen(s) - 1] == ' ') {s[strlen(s) - 1] = '\0';}
+    return s;
+}
+
+int char_in(char c, char *s) {
+    for (int i = 0; i < strlen(s); i++) {
+        if (s[i] == c) {
+            return 1;
+        }
+    }
+    return 0;
+}

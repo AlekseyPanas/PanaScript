@@ -2,9 +2,11 @@
 # State transitions for unmentioned characters go to garbage state with id -1
 # State names may have spaces in them and any other symbols, however, they MAY NOT start with a number
 # State transition lines MUST start with a tab, or else they will be ignored
+# State transitions will be evaluated in the order that they are listed, so in a transition conflict, the earlier one will evaluate
 
 <int state id> <state name>:
-    <char>: <next state id | next state name>
+    <trigger>: <next state id | next state name>
     ...
 
+# Trigger can be a single character, a range in the form [A-Za-z0-9], a list in the form {a, b, x, 1}, or a list of ascii numeric values in the form (32, 11, 12)
 
