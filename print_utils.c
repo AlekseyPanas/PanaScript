@@ -15,11 +15,11 @@ char *strip(char *s) {
     return s;
 }
 
-int char_in(char c, char *s) {
+char *char_in(char c, char *s) {
     for (int i = 0; i < strlen(s); i++) {
         if (s[i] == c) {
-            return 1;
+            return &s[i];
         }
     }
-    return 0;
+    return NULL;
 }

@@ -242,7 +242,7 @@ DFSA *parse_dfsa(FILE* file) {
                 while (*stripped != '\0' && *stripped != ']') {
                     
                     // Ignore whitespace
-                    if (!(char_in(*stripped, whitespace))) {
+                    if (char_in(*stripped, whitespace) == NULL) {
                         
                         // Records first character
                         if (state == 0) {
@@ -333,21 +333,53 @@ DFSA *parse_dfsa(FILE* file) {
 
                     int ascii_code = strtol(list_item, NULL, 10);
 
-                    // Add Transition
-                    add_temp_trans(&temp_trans_list, src, temp_trans_name, temp_trans_id, (char) ascii_code);
+                    // Detect dash, if present, process range
+                    char *dash_ptr = char_in('-', list_item);
+                    if (dash_ptr != NULL) {
+                        int upper_ascii_code = strtol(dash_ptr + 1, NULL, 10);
 
-                    if (DEBUG == 1) {
-                        // DEBUG: Print Transition
-                        char temp[500];
-                        sprintf(temp, "Parsed state transition %d ", ascii_code);
-                        strcat(temp, print_str);
-                        printf("%s", temp);
+                        // Add transitions within range
+                        for (char c = (char) ascii_code; c <= (char) upper_ascii_code; c++) {
+                            
+                            // Add Transition
+                            add_temp_trans(&temp_trans_list, src, temp_trans_name, temp_trans_id, c);
+
+                            if (DEBUG == 1) {
+                                // DEBUG: Print state transitions
+                                char temp[500];
+                                sprintf(temp, "Parsed state transition %c ", c);
+                                strcat(temp, print_str);
+                                printf("%s", temp);
+                            }
+                        }
+
+                    } 
+
+                    else {
+                        // Add Transition
+                        add_temp_trans(&temp_trans_list, src, temp_trans_name, temp_trans_id, (char) ascii_code);
+
+                        if (DEBUG == 1) {
+                            // DEBUG: Print Transition
+                            char temp[500];
+                            sprintf(temp, "Parsed state transition %d ", ascii_code);
+                            strcat(temp, print_str);
+                            printf("%s", temp);
+                        }
                     }
 
                     list_item = strtok(NULL, ","); // Next number
                 }
             } 
             
+            // All ASCII characters
+            else if (stripped[0] == 'A' && stripped[1] == 'L' && stripped[2] == 'L') {
+                for (int i = 0; i < 128; i++) {
+                    // Add Transition
+                    add_temp_trans(&temp_trans_list, src, temp_trans_name, temp_trans_id, (char) i);
+                }
+            }
+
             // Single character
             else {
                 char trans_chr = *stripped; 

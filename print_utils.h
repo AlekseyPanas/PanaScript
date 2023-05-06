@@ -9,5 +9,5 @@ a new pointer to the first nonspace character to remove leading spaces
 */
 char *strip(char *s);
 
-/*Return 1 if c in s, else 0*/
-int char_in(char c, char *s);
+/*Return pointer to first occurrence of c in s, or NULL otherwise*/
+char *char_in(char c, char *s);

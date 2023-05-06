@@ -4,6 +4,7 @@
 0 state 0:
 	a: state 1
 	b: state 2
+	ALL: 4
 
 1 state 1:
 	a: state 0
@@ -20,5 +21,5 @@
 5 cool state:
 	x: 2
 	[A-D0-4]: 0
-	(32, 10): 1
+	(32, 10, 1-5): 1
 	{y, w, a, b}: 5
