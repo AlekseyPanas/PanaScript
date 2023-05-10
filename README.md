@@ -76,7 +76,7 @@ All the following shorthand assignments exist:
 `+`  add  
 `-` subtract  
 `/` divide  
-`%` modulo
+`%` modulo  
 `*` multiply  
 `<<`  shift left logical   
 `>>`  shift right logical  
